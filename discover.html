@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="type/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/themes/material/assets/fonts/icons.woff"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <title>MINDSANCTUM - Discover</title>
+
+  <link rel="stylesheet" type="text/css" href="assets/css/discover.css" />
+
+  <style>
+    .ui.sticky.secondary.pointing.menu {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 0.8em 2em;
+      border-bottom: none;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .ui.sticky.secondary.pointing.menu:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .ui.sticky.secondary.pointing.menu .item {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      color: #2c3e50;
+      margin: 0 5px;
+      padding: 12px 20px;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      position: relative;
+      border: none !important;
+    }
+
+    .ui.sticky.secondary.pointing.menu .item:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: #3498db;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .ui.sticky.secondary.pointing.menu .item:hover {
+      background: rgba(52, 152, 219, 0.1);
+      color: #3498db;
+      transform: translateY(-2px);
+    }
+
+    .ui.sticky.secondary.pointing.menu .item:hover:before {
+      width: 70%;
+    }
+
+    .ui.sticky.secondary.pointing.menu .active.item {
+      background: #3498db !important;
+      color: white !important;
+      font-weight: 600;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    .ui.sticky.secondary.pointing.menu .active.item:hover {
+      background: #2980b9 !important;
+    }
+
+    #logout-btn {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: white !important;
+      border: none;
+      padding: 12px 25px;
+      transition: all 0.3s ease;
+    }
+
+    #logout-btn:hover {
+      background: linear-gradient(135deg, #c0392b, #e74c3c);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    }
+
+    /* Logo Animation */
+    @keyframes logoFloat {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .logo {
+      animation: logoFloat 3s ease-in-out infinite;
+      font-weight: 600;
+      font-size: 1.2em;
+      color: #2c3e50;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+    }
+
+    body {
+        background: linear-gradient(-45deg, #e0f7fa, #b2ebf2, #d4f1f4, #c2e9fb);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        font-family: 'Poppins', sans-serif;
+        color: #2c3e50;
+    }
+
+    @keyframes gradientBG {
+        0% { background-position: 0% 50% }
+        50% { background-position: 100% 50% }
+        100% { background-position: 0% 50% }
+    }
+
+    .site-content {
+        padding: 4rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        opacity: 0;
+        animation: fadeIn 1s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .discover-section {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 4rem 0 2rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transform: translateX(-50px);
+        opacity: 0;
+        animation: slideIn 0.8s ease-out forwards;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateX(-50px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+
+    .ui.card {
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        height: 250px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ui.card:hover {
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: 0 15px 45px rgba(52, 152, 219, 0.2);
+    }
+
+    .ui.card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+        );
+        transition: 0.5s;
+    }
+
+    .ui.card:hover::before {
+        left: 100%;
+    }
+
+    .watch-section .ui.card {
+        background: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%);
+    }
+
+    .listen-section .ui.card {
+        background: linear-gradient(135deg, #f0fdf4 0%, #86efac 100%);
+    }
+
+    .read-section .ui.card {
+        background: linear-gradient(135deg, #fff5f5 0%, #fecaca 100%);
+    }
+
+    .ui.card .content {
+        padding: 2rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .ui.card .header {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a365d;
+        position: relative;
+    }
+
+    .ui.card .header::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: currentColor;
+        transition: width 0.3s ease;
+    }
+
+    .ui.card:hover .header::after {
+        width: 100px;
+    }
+
+    .ui.card .description {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #4a5568;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        background: rgba(255, 255, 255, 0.9);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .swiper-button-next:hover,
+    .swiper-button-prev:hover {
+        transform: scale(1.1);
+        background: #3498db;
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        font-size: 1.5rem;
+        color: #2c3e50;
+        transition: color 0.3s ease;
+    }
+
+    .swiper-button-next:hover::after,
+    .swiper-button-prev:hover::after {
+        color: white;
+    }
+
+    @keyframes cardLoad {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .swiper-slide {
+        opacity: 0;
+        animation: cardLoad 0.6s ease-out forwards;
+    }
+
+    .swiper-slide:nth-child(1) { animation-delay: 0.1s; }
+    .swiper-slide:nth-child(2) { animation-delay: 0.2s; }
+    .swiper-slide:nth-child(3) { animation-delay: 0.3s; }
+    .swiper-slide:nth-child(4) { animation-delay: 0.4s; }
+
+    .interactive-element {
+        transition: all 0.3s ease;
+    }
+
+    .interactive-element:hover {
+        transform: scale(1.05);
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(52, 152, 219, 0.5);
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(52, 152, 219, 0.8);
+    }
+  </style>
+</head>
+
+<body class="site">
+    <div class="ui sticky secondary pointing menu">
+      <a class="logo" href="homepage.html">MINDSANCTUM</a>
+      <div class="right menu">
+        <a class="item" href="homepage.html">
+          <i class="home icon"></i> Home
+        </a>
+        <a id="add-entry-btn" class="item">
+          <i class="plus circle icon"></i> Add Entry
+        </a>
+        <a class="item" href="overview.html">
+          <i class="chart bar icon"></i> Overview
+        </a>
+        <a class="active item" href="discover.html">
+          <i class="compass icon"></i> Discover
+        </a>
+        <a class="ui item" id="logout-btn">
+          <i class="sign-out icon"></i> Logout
+        </a>
+      </div>
+    </div>
+
+  <main class="site-content">
+    <h3 class="discover-section"><i class="film icon"></i> Watch</h3>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <a href="https://www.youtube.com/embed/WWloIAQpMcQ" target="_blank">
+            <div class="ui card listen">
+              <div class="content">
+                <div class="center aligned header card-heading">How to Cope with Anxiety</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    TED Talk by Olivia Remes
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://youtu.be/85QY_d-8J2M" target="_blank">
+            <div class="ui card listen">
+              <div class="content">
+                <div class="center aligned header card-heading">Anxiety: A Cancer of the Mind</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    TED Talk by Aneysha Bhat
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://youtu.be/JUedQ0_EGCQ" target="_blank">
+            <div class="ui card listen">
+              <div class="content">
+                <div class="center aligned header card-heading">Living with High Functioning Anxiety</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    TED Talk by Jordan Raskopoulos
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://www.youtube.com/watch?v=khkJkR-ipfw" target="_blank">
+            <div class="ui card listen">
+              <div class="content">
+                <div class="center aligned header card-heading">Moving Forward With Grief</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    Ted Talk by Nora McInerny
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://www.youtube.com/watch?v=ORs3-tRokGU" target="_blank">
+            <div class="ui card listen">
+              <div class="content">
+                <div class="center aligned header card-heading">Treating PTSD</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    Ted Talk by Peter Tuerk | TEDxCharleston
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+
+    <h3 class="discover-section"><i class="headphones icon"></i> Listen</h3>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <a href="https://open.spotify.com/playlist/2EXP6pCDBdF4yRj2LZ6xFr" target="_blank">
+            <div class="ui card watch">
+              <div class="content">
+                <div class="center aligned header card-heading">Calming Music Playlist</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    A Spotify Playlist full of calming music by Calming Music Academy.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://open.spotify.com/show/79GbkgP2sxA8FJ97Qk1GKZ" target="_blank">
+            <div class="ui card watch">
+              <div class="content">
+                <div class="center aligned header card-heading">Health Anxiety Podcast Show</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    Let Dennis Simsek guide you through the diagnosis, symptoms, and coping strategies for anxiety.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://open.spotify.com/show/6XPm7Mr08nFVWX4Abcqmek" target="_blank">
+            <div class="ui card watch">
+              <div class="content">
+                <div class="center aligned header card-heading">Relaxing Tunes</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    A Spotify Playlist full of relaxing tunes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://open.spotify.com/show/6925GqlCoRoCEo8UYy17FQ" target="_blank">
+            <div class="ui card watch">
+              <div class="content">
+                <div class="center aligned header card-heading">Love Your Anxiety</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    Listen to Emilie Clarke's personal anxiety story and get ideas on how to cope with yours.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://www.youtube.com/watch?v=YFSc7Ck0Ao0" target="_blank">
+            <div class="ui card watch">
+              <div class="content">
+                <div class="center aligned header card-heading">Breathing Meditation</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    5-minute breathing meditation exercise guided by Diana Winston, UCLA Mindful Awareness Research
+                    Center.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+
+    <h3 class="discover-section"><i class="book icon"></i> Read</h3>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <a href="https://www.helpguide.org/articles/depression/coping-with-depression.htm" target="_blank">
+            <div class="ui card read">
+              <div class="content">
+                <div class="center aligned header card-heading">A Helpful Guide to Depression</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    Helpful guide to coping with depression.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://adaa.org/tips" target="_blank">
+            <div class="ui card read">
+              <div class="content">
+                <div class="center aligned header card-heading">Tips For Anxiety</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    Tips on coping with anxiety.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://www.helpguide.org/articles/mental-health/building-better-mental-health.htm" target="_blank">
+            <div class="ui card read">
+              <div class="content">
+                <div class="center aligned header card-heading">Building Better Mental Health</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    An article about building better mental health for yourself. What to look for.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://www.samhsa.gov/find-help/national-helpline" target="_blank">
+            <div class="ui card read">
+              <div class="content">
+                <div class="center aligned header card-heading">National Helpline</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    Substance Abuse and Mental Health Services and Administration national helpline sources.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="swiper-slide">
+          <a href="https://www.apa.org/helpcenter/grief" target="_blank">
+            <div class="ui card read">
+              <div class="content">
+                <div class="center aligned header card-heading">Coping With Grief</div>
+                <div class="center aligned description card-body">
+                  <p>
+                    Lost a loved one? Coping with grief can be hard, we can help.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </main>
+
+    <main class="ui modal site-content summary">
+      <h3 id="display-date" class="heading"></h3>
+      <div id="mood-states" class="ui grid">
+        <div class="five column row">
+          <div class="column">
+            <button
+              id="depressed"
+              class="mood"
+              data-mood="depressed"
+              data-color="#5C8B93"
+              value="1"
+            ></button>
+            <p class="mood-text">depressed</p>
+          </div>
+          <div class="column">
+            <button
+              id="sad"
+              class="mood"
+              data-mood="sad"
+              data-color="#76B3BE"
+              value="2"
+            ></button>
+            <p class="mood-text">sad</p>
+          </div>
+          <div class="column">
+            <button
+              id="moderate"
+              class="mood"
+              data-mood="moderate"
+              data-color="#8FDAE7"
+              value="3"
+            ></button>
+            <p class="mood-text">moderate</p>
+          </div>
+          <div class="column">
+            <button
+              id="happy"
+              class="mood"
+              data-mood="happy"
+              data-color="#A3E0EB"
+              value="4"
+            ></button>
+            <p class="mood-text">happy</p>
+          </div>
+          <div class="column">
+            <button
+              id="exhilirated"
+              class="mood"
+              data-mood="exhilirated"
+              data-color="#C1EAF1"
+              value="5"
+            ></button>
+            <p class="mood-text">exhilirated</p>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      <div id="question-answers">
+        <p id="questionA" class="question"></p>
+        <button
+          id="answer-1A"
+          class="answer-opt-1"
+          data-text="I feel hopeless all the time."
+        ></button>
+        <button
+          id="answer-2A"
+          class="answer-opt-1"
+          data-text="I feel hopeless sometimes."
+        ></button>
+        <button
+          id="answer-3A"
+          class="answer-opt-1"
+          data-text="I feel hopeful."
+        ></button>
+        <p id="questionB" class="question"></p>
+        <button
+          id="answer-1B"
+          class="answer-opt-2"
+          data-text="I have trouble falling asleep."
+        ></button>
+        <button
+          id="answer-2B"
+          class="answer-opt-2"
+          data-text="I keep waking up at night."
+        ></button>
+        <button
+          id="answer-3B"
+          class="answer-opt-2"
+          data-text="My sleeping habits are normal."
+        ></button>
+        <p id="questionC" class="question"></p>
+        <button
+          id="answer-1C"
+          class="answer-opt-3"
+          data-text="I am productive."
+        ></button>
+        <button
+          id="answer-2C"
+          class="answer-opt-3"
+          data-text="I only complete necessary tasks."
+        ></button>
+        <button
+          id="answer-3C"
+          class="answer-opt-3"
+          data-text="I have trouble leaving the house."
+        ></button>
+      </div>
+
+      <hr />
+      <div id="display-comments">
+        <div class="ui form">
+          <div class="field">
+            <h3 class="heading">Additional Comments:</h3>
+            <textarea id="userComment"></textarea>
+            <button type="submit" id="continue-btn" class="modal-btn">
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-auth.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-database.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
+
+    <script>
+      window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.ui.sticky.secondary.pointing.menu');
+        if (window.scrollY > 50) {
+          navbar.style.padding = '0.6em 2em';
+          navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        } else {
+          navbar.style.padding = '0.8em 2em';
+          navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        }
+      });
+
+      const menuItems = document.querySelectorAll('.ui.sticky.secondary.pointing.menu .item');
+      menuItems.forEach(item => {
+        item.addEventListener('mouseenter', function(e) {
+          this.style.transform = 'translateY(-2px)';
+        });
+        item.addEventListener('mouseleave', function(e) {
+          if (!this.classList.contains('active')) {
+            this.style.transform = 'translateY(0)';
+          }
+        });
+      });
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const swiperOptions = {
+          slidesPerView: 1,
+          spaceBetween: 30,
+          loop: true,
+          centeredSlides: true,
+          autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          breakpoints: {
+            640: {
+              slidesPerView: 2,
+            },
+            968: {
+              slidesPerView: 3,
+            },
+            1200: {
+              slidesPerView: 4,
+            },
+          },
+          effect: 'coverflow',
+          coverflowEffect: {
+            rotate: 5,
+            stretch: 0,
+            depth: 100,
+            modifier: 2,
+            slideShadows: false,
+          },
+        };
+
+        const swipers = document.querySelectorAll('.swiper-container');
+        swipers.forEach(swiperElement => {
+          new Swiper(swiperElement, swiperOptions);
+        });
+      });
+
+      const observerOptions = {
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animation = 'slideIn 0.8s ease-out forwards';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.discover-section').forEach(section => {
+        observer.observe(section);
+      });
+    </script>
+</body>
+</html>

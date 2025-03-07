@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <title>MINDSANCTUM - Overview</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+    <link rel="stylesheet" type="type/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/themes/material/assets/fonts/icons.woff" />
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="assets/css/add-entry_overview.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="ui sticky secondary pointing menu">
+        <a class="logo" href="homepage.html">MINDSANCTUM</a>
+        <div class="right menu">
+            <a class="item" href="homepage.html">
+                <i class="home icon"></i> Home
+            </a>
+            <a id="add-entry-btn" class="item" href="add-entry.html">
+                <i class="plus circle icon"></i> Add Entry
+            </a>
+            <a class="active item" href="overview.html">
+                <i class="chart bar icon"></i> Overview
+            </a>
+            <a class="item" href="discover.html">
+                <i class="compass icon"></i> Discover
+            </a>
+            <a class="ui item" id="logout-btn">
+                <i class="sign-out icon"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <div class="ui container" style="background-color: #ffffff; padding: 20px; border-radius: 10px; margin-top: 20px;">
+        <h1>MENTAL TRACKER</h1>
+        <div class="ui grid">
+            <div class="eight wide column">
+                <div class="stress-analyzer-box">
+                    <h2>STRESS LEVEL ANALYZER</h2>
+                    <div class="bot-container">
+                        <div class="ui form">
+                            <div class="field">
+                                <label>Heart Rate (bpm):</label>
+                                <input type="number" id="heart-rate" placeholder="Enter your heart rate">
+                            </div>
+                            <div class="field">
+                                <label>Breathing Rate (breaths per minute):</label>
+                                <input type="number" id="breathing-rate" placeholder="Enter your breathing rate">
+                            </div>
+                            <div class="field">
+                                <label>Blood Pressure (mmHg):</label>
+                                <input type="text" id="blood-pressure" placeholder="Enter your blood pressure (e.g., 120/80)">
+                            </div>
+                            <div class="field">
+                                <label>Hours of Sleep:</label>
+                                <input type="number" id="sleep-hours" placeholder="Enter hours of sleep">
+                            </div>
+                            <button class="ui button primary" id="analyze-btn">ANALYZE STRESS LEVEL</button>
+                        </div>
+                        <div class="bot-response" id="bot-response">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="eight wide column">
+                <div class="image-container">
+                    <img id="stress-image" src="https://img.freepik.com/free-vector/hand-drawn-frustrated-cartoon-illustration_52683-117807.jpg?t=st=1741314088~exp=1741317688~hmac=54640e9360be649b0241984c8f713c0818554e46b304520f104b44c58e2601bb&w=900" alt="Stress Level Visualization" style="width: 100%; height: auto; border-radius: 10px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .ui.sticky.secondary.pointing.menu {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.8em 2em;
+            border-bottom: none;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .ui.sticky.secondary.pointing.menu:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .ui.sticky.secondary.pointing.menu .item {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            color: #2c3e50;
+            margin: 0 5px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            border: none !important;
+        }
+
+        .ui.sticky.secondary.pointing.menu .item:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #3498db;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .ui.sticky.secondary.pointing.menu .item:hover {
+            background: rgba(52, 152, 219, 0.1);
+            color: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .ui.sticky.secondary.pointing.menu .item:hover:before {
+            width: 70%;
+        }
+
+        .ui.sticky.secondary.pointing.menu .active.item {
+            background: #3498db !important;
+            color: white !important;
+            font-weight: 600;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .ui.sticky.secondary.pointing.menu .active.item:hover {
+            background: #2980b9 !important;
+        }
+
+        #logout-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white !important;
+            border: none;
+            padding: 12px 25px;
+            transition: all 0.3s ease;
+        }
+
+        #logout-btn:hover {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+
+        @keyframes logoFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .logo {
+            animation: logoFloat 3s ease-in-out infinite;
+            font-weight: 600;
+            font-size: 1.2em;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); 
+            font-family: Arial, sans-serif;
+            min-height: 100vh; 
+        }
+
+        .bot-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .bot-container .ui.form .field input {
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 18px;
+            width: 100%;
+        }
+
+        .bot-container .ui.button.primary {
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .bot-container .ui.button.primary:hover {
+            background-color: #357abd;
+        }
+
+        .bot-response {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            border: 2px solid #4a90e2;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .bot-response p {
+            margin: 10px 0;
+        }
+
+        .bot-response p strong {
+            color: #4a90e2;
+        }
+
+        .ui.grid {
+            margin: 0;
+        }
+
+        .stress-analyzer-box {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .ui.container {
+            width: 90% !important;
+            max-width: none !important;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const heartRateInput = document.getElementById("heart-rate");
+            const breathingRateInput = document.getElementById("breathing-rate");
+            const bloodPressureInput = document.getElementById("blood-pressure");
+            const sleepHoursInput = document.getElementById("sleep-hours");
+            const analyzeBtn = document.getElementById("analyze-btn");
+            const botResponse = document.getElementById("bot-response");
+            const stressImage = document.getElementById("stress-image");
+
+            analyzeBtn.addEventListener("click", function () {
+                const heartRate = parseInt(heartRateInput.value.trim());
+                const breathingRate = parseInt(breathingRateInput.value.trim());
+                const bloodPressure = bloodPressureInput.value.trim();
+                const sleepHours = parseInt(sleepHoursInput.value.trim());
+
+                if (isNaN(heartRate) || isNaN(breathingRate) || !bloodPressure || isNaN(sleepHours)) {
+                    botResponse.innerHTML = "<p>Please fill in all fields with valid values!</p>";
+                    return;
+                }
+
+                let stressLevel = "No Stress";
+                if (heartRate > 100 || breathingRate > 30 || sleepHours < 5 || bloodPressure > 110) {
+                    stressLevel = "Highly Stressed";
+                } else if (heartRate > 80 || breathingRate > 20 || sleepHours > 5 || bloodPressure > 90) {
+                    stressLevel = "Moderately Stressed";
+                } else if (heartRate > 60 || breathingRate > 12 || sleepHours > 7 || bloodPressure > 80) {
+                    stressLevel = "No Stress";
+                }
+
+                switch (stressLevel) {
+                    case "Highly Stressed":
+                        stressImage.src = "https://img.freepik.com/free-vector/hand-drawn-frustrated-cartoon-illustration_52683-117807.jpg?t=st=1741314088~exp=1741317688~hmac=54640e9360be649b0241984c8f713c0818554e46b304520f104b44c58e2601bb&w=900";
+                        break;
+                    case "Mildly Stressed":
+                    case "Moderately Stressed":
+                        stressImage.src = "https://img.freepik.com/premium-vector/illustration-cartoon-stressed-little-boy-doing-hard-homework-desk_283146-91.jpg";
+                        break;
+                    case "No Stress":
+                        stressImage.src = "https://i.scdn.co/image/ab67616d0000b2734a8f96c139545fe17992e917";
+                        break;
+                }
+
+                botResponse.innerHTML = `
+                    <p><strong>Your Stress Level:</strong> ${stressLevel}</p>
+                    <p><strong>Recommendation:</strong> ${getRecommendation(stressLevel)}</p>
+                `;
+
+                botResponse.innerHTML += `
+                    <button id="reset-btn" class="btn btn-primary mt-3" style="
+                        background-color: #4CAF50;
+                        border: none;
+                        color: white;
+                        padding: 12px 24px;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-size: 16px;
+                        margin: 4px 2px;
+                        cursor: pointer;
+                        border-radius: 25px;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                        transition: all 0.3s ease;
+                    ">Analyze Again</button>
+                `;
+
+                const resetBtn = document.getElementById("reset-btn");
+                resetBtn.addEventListener("mouseover", function() {
+                    this.style.backgroundColor = "#45a049";
+                    this.style.transform = "scale(1.05)";
+                });
+
+                resetBtn.addEventListener("mouseout", function() {
+                    this.style.backgroundColor = "#4CAF50";
+                    this.style.transform = "scale(1)";
+                });
+
+                resetBtn.addEventListener("click", function() {
+                    heartRateInput.value = "";
+                    breathingRateInput.value = "";
+                    bloodPressureInput.value = "";
+                    sleepHoursInput.value = "";
+                    
+                    botResponse.innerHTML = "";
+                    
+                    stressImage.src = "https://img.freepik.com/free-vector/hand-drawn-frustrated-cartoon-illustration_52683-117807.jpg?t=st=1741314088~exp=1741317688~hmac=54640e9360be649b0241984c8f713c0818554e46b304520f104b44c58e2601bb&w=900";
+                });
+            });
+
+            function getRecommendation(stressLevel) {
+                switch (stressLevel) {
+                    case "Highly Stressed":
+                        return "Consider consulting a healthcare professional and practicing relaxation techniques like deep breathing or meditation.";
+                    case "Moderately Stressed":
+                        return "Try to get more sleep, exercise regularly, and maintain a balanced diet.";
+                    case "Mildly Stressed":
+                        return "Take short breaks, practice mindfulness, and ensure you're getting enough rest.";
+                    case "No Stress":
+                        return "Keep up the good work! Maintain a healthy lifestyle to stay stress-free.";
+                    default:
+                        return "Please ensure all inputs are valid.";
+                }
+            }
+        });
+    </script>
+
+    <script type="text/javascript" src="assets/javascript/add-entry_overview.js"></script>
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.ui.sticky.secondary.pointing.menu');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '0.6em 2em';
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.padding = '0.8em 2em';
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        const menuItems = document.querySelectorAll('.ui.sticky.secondary.pointing.menu .item');
+        menuItems.forEach(item => {
+            item.addEventListener('mouseenter', function(e) {
+                this.style.transform = 'translateY(-2px)';
+            });
+            item.addEventListener('mouseleave', function(e) {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
